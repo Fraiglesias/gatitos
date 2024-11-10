@@ -1,31 +1,44 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, ObservableInput } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:5000/api/profiles'; // URL de la API
+  private apiUrl = 'http://127.0.0.1:5000/api/usuarios'; // URL de la API
+    handleError: ((err: any, caught: Observable<Object>) => ObservableInput<any>) | undefined;
+    
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router: Router) {}
 
   login(correo: string, contrasena: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, { CORREO: correo, CONTRASENA: contrasena });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = { CORREO: correo, CONTRASENA: contrasena };
+
+    console.log("Enviando solicitud de inicio de sesión con:", body);  // Agrega este console.log
+
+    return this.http.post<any>(this.apiUrl, body, { headers });
+}
+
+logout() {
+    // Limpia cualquier información de sesión (puedes agregar más si tienes otros datos)
+    localStorage.removeItem('user'); // Ejemplo: eliminar datos de usuario almacenados
+
+    // Redirigir al usuario a la página de inicio de sesión
+    this.router.navigate(['/login']);
+  }
+  createProfile(profileData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<any>(this.apiUrl, profileData, { headers });
+  }
+  
+  isAuthenticated(): boolean {
+    // Comprueba si el token existe
+    return !!localStorage.getItem('authToken');
   }
 
-  register(nombre: string, rut: string, correo: string, contrasena: string, tipo_perfil: number, direccion: string, region: string, comuna: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, { 
-      NOMBRE: nombre,
-      RUT: rut,
-      CORREO: correo,
-      CONTRASEÑA: contrasena,
-      TIPO_PERFIL: tipo_perfil,
-      DIRECCION: direccion,
-      REGIÓN: region,
-      COMUNA: comuna
-    });
-  }
 
   recoverPassword(correo: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, { CORREO: correo });

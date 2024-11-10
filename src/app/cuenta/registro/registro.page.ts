@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
@@ -8,34 +9,53 @@ import { AuthService } from 'src/app/auth.service';
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage implements OnInit {
-  nombre: string = '';
-  rut: string = '';
-  correo: string = '';
-  contrasena: string = '';
-  tipo_perfil: number = 1; // Asumiendo perfil de usuario regular
-  direccion: string = '';
-  region: string = '';
-  comuna: string = '';
-  message: string = '';
+  registroForm: FormGroup;
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.registroForm = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      rut: ['', Validators.required],
+      correo: ['', [Validators.required, Validators.email]],
+      contrasena: ['', Validators.required],
+      direccion: [''],
+      region: [''],
+      comuna: ['']
+    });
+  }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+ ;
   }
 
-  register() {
-    this.authService.register(this.nombre, this.rut, this.correo, this.contrasena, this.tipo_perfil, this.direccion, this.region, this.comuna).subscribe({
+  onSubmit() {
+    const profileData = {
+      NOMBRE: this.registroForm.get('nombre')?.value,
+      RUT: this.registroForm.get('rut')?.value,
+      CORREO: this.registroForm.get('correo')?.value,
+      CONTRASENA: this.registroForm.get('contrasena')?.value,
+      DIRECCIÓN: this.registroForm.get('direccion')?.value,
+      REGIÓN: this.registroForm.get('region')?.value,
+      COMUNA: this.registroForm.get('comuna')?.value,
+      TIPO_PERFIL: 1 // Por ejemplo, se puede ajustar según el tipo de perfil
+    };
+
+    this.authService.createProfile(profileData).subscribe({
       next: (response) => {
-        if (response.success) {
-          this.router.navigate(['/login']);
-        } else {
-          this.message = 'Error en el registro. Inténtalo de nuevo.';
-        }
+        console.log('Perfil creado:', response);
+        this.router.navigate(['/login']);  // Redirige al inicio de sesión después de crear la cuenta
       },
-      error: (err) => {
-        console.error('Error en el registro:', err);
-        this.message = 'Error en el registro. Inténtalo de nuevo.';
+      error: (error) => {
+        console.error('Error al crear el perfil:', error);
+        this.errorMessage = 'No se pudo crear el perfil. Inténtalo de nuevo.';
       }
     });
+  }
+
+  redirectTo(path: string) {
+    this.router.navigate([path]);
   }
 }

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
+import { AuthGuard } from './auth.guard'; // Importa el guard
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule), canActivate: [AuthGuard]
   },
   {
     path: '',
@@ -13,31 +13,31 @@ const routes: Routes = [
   },
   {
     path: 'product-add',
-    loadChildren: () => import('./producto/product-add/product-add.module').then( m => m.ProductAddPageModule),
+    loadChildren: () => import('./producto/product-add/product-add.module').then( m => m.ProductAddPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'product-all',
-    loadChildren: () => import('./producto/product-all/product-all.module').then( m => m.ProductAllPageModule),
+    loadChildren: () => import('./producto/product-all/product-all.module').then( m => m.ProductAllPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'product-detail/:id',
-    loadChildren: () => import('./producto/product-detail/product-detail.module').then( m => m.ProductDetailPageModule),
+    loadChildren: () => import('./producto/product-detail/product-detail.module').then( m => m.ProductDetailPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'product-edit/:id',
-    loadChildren: () => import('./producto/product-edit/product-edit.module').then( m => m.ProductEditPageModule),
+    loadChildren: () => import('./producto/product-edit/product-edit.module').then( m => m.ProductEditPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'product-list',
-    loadChildren: () => import('./producto/product-list/product-list.module').then( m => m.ProductListPageModule),
+    loadChildren: () => import('./producto/product-list/product-list.module').then( m => m.ProductListPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'cart',
-    loadChildren: () => import('./producto/cart/cart.module').then( m => m.CartPageModule)
+    loadChildren: () => import('./producto/cart/cart.module').then( m => m.CartPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'buscar',
-    loadChildren: () => import('./buscar/buscar.module').then( m => m.BuscarPageModule)
+    loadChildren: () => import('./buscar/buscar.module').then( m => m.BuscarPageModule), canActivate: [AuthGuard]
   },
   {
     path: 'login',

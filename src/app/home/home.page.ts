@@ -5,6 +5,7 @@ import { ProductServiceService } from '../producto/product-service.service';
 import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CartService } from '../producto/cart.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,8 @@ export class HomePage implements OnInit {
     private restApi: ProductServiceService,
     private loadingController: LoadingController,   
     private router: Router,
-    private cartService: CartService) {}
+    private cartService: CartService,
+    private authService: AuthService) {}
 
   // Función para redirigir a otra página
   redirectTo(path: string) {
@@ -41,6 +43,9 @@ export class HomePage implements OnInit {
   }
   ngOnInit() {
     this.getProducts();
+  }
+  onLogout() {
+    this.authService.logout();
   }
   
 

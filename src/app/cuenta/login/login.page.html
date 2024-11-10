@@ -1,24 +1,25 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Iniciar Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="floating">Correo Electrónico</ion-label>
-    <ion-input [(ngModel)]="correo" type="email"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Contraseña</ion-label>
-    <ion-input [(ngModel)]="contrasena" type="password"></ion-input>
-  </ion-item>
-  <ion-button expand="full" (click)="login()">Iniciar Sesión</ion-button>
-  <p>{{ message }}</p>
-
-  <!-- Botón para navegar a la página de registro -->
-  <ion-button expand="full" fill="clear" (click)="redirectTo('/registro')">Crear Cuenta</ion-button>
-
-  <!-- Botón para navegar a la página de recuperación de contraseña -->
-  <ion-button expand="full" fill="clear" (click)="redirectTo('/recuperar')">¿Olvidaste tu Contraseña?</ion-button>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input formControlName="correo" type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="contrasena" type="password"></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit">Iniciar Sesión</ion-button>
+    <ion-text color="danger" *ngIf="errorMessage">{{ errorMessage }}</ion-text>
+  </form>
 </ion-content>
+ <!-- Botón para navegar a la página de registro -->
+ <ion-button expand="full" fill="clear" (click)="redirectTo('/registro')">Crear Cuenta</ion-button>
+
+ <!-- Botón para navegar a la página de recuperación de contraseña -->
+ <ion-button expand="full" fill="clear" (click)="redirectTo('/recuperar')">¿Olvidaste tu Contraseña?</ion-button>

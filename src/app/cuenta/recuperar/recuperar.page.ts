@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
 @Component({
@@ -11,9 +12,9 @@ export class RecuperarPage implements OnInit {
   correo: string = '';
   message: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+   ;
   }
 
   recoverPassword() {
@@ -30,5 +31,8 @@ export class RecuperarPage implements OnInit {
         this.message = 'Error en recuperación de contraseña. Inténtalo de nuevo.';
       }
     });
+  }
+  redirectTo(path: string) {
+    this.router.navigate([path]);
   }
 }
