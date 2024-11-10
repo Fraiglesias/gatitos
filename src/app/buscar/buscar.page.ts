@@ -1,28 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
-
 import { ClProducto } from '../producto/model/Clproducto';
+import { Router } from '@angular/router';
 import { ProductServiceService } from '../producto/product-service.service';
 import { LoadingController } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { CartService } from '../producto/cart.service';
 
+
+
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-buscar',
+  templateUrl: './buscar.page.html',
+  styleUrls: ['./buscar.page.scss'],
 })
-export class HomePage implements OnInit {
+export class BuscarPage implements OnInit {
   @Input() producto!: ClProducto;
-  productos: ClProducto[] = [];
-  ofertas: ClProducto[] = [];
-  novedad: ClProducto[] = [];
+  productos: ClProducto[] = [];  
   searchTerm: string = ''; // Añadido para la búsqueda
   busqueda: ClProducto[] = [];
-  carrito: { producto: ClProducto, cantidad: number, precioFinal: number }[] = [];
-
- 
-
-
  
 
   constructor(
@@ -35,14 +29,9 @@ export class HomePage implements OnInit {
   redirectTo(path: string) {
     this.router.navigate([path]);
   }
-  
-  redirectTo2(id: number) {
-    this.router.navigate([`/product-detail/${id}`]); // Redirige a la página de detalles con el ID del gatito
-  }
   ngOnInit() {
     this.getProducts();
-  }
-  
+  }  
 
   async getProducts() {
     const loading = await this.loadingController.create({
@@ -53,9 +42,7 @@ export class HomePage implements OnInit {
     this.restApi.getProducts().subscribe({
       next: (res: ClProducto[]) => {
         console.log('Productos recibidos:', res);
-        this.productos = res.map(producto => new ClProducto(producto));
-        
-        
+        this.productos = res.map(producto => new ClProducto(producto));        
         loading.dismiss();
         this.busqueda = this.productos;
       },
@@ -64,9 +51,7 @@ export class HomePage implements OnInit {
         loading.dismiss();
       }
     });
-  }
-
- 
+  }  
 
   handleRefresh(event: { target: { complete: () => void } }) {
     setTimeout(() => {
@@ -85,7 +70,13 @@ export class HomePage implements OnInit {
   getDiscountedPrice(price: number): number {
     return price * 0.8; // Aplica un descuento del 20%
   }
-  buscarGatito(event: any) {
+  volver(path: string) {
+    this.router.navigate([path]);
+  }
+
+ 
+
+  buscarProducto(event: any) {
     const term = event.target.value.toLowerCase().trim();
     if (!term) {
       this.busqueda = []; // Si no hay término de búsqueda, muestra la lista vacía
@@ -98,9 +89,6 @@ export class HomePage implements OnInit {
     }
     console.log('Productos encontrados:', this.busqueda);
   }
-
-  
-
 
   
   

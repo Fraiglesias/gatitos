@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Detalle Gatito</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card >
+    <ion-card-header>
+      <ion-card-title>{{ product?.name }}</ion-card-title>
+      <ion-card-subtitle>Raza: {{ product?.breed }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Edad:</ion-label>
+        <p>{{ product?.age }} años</p>
+      </ion-item>
+      <ion-item>
+        <ion-label>Descripción:</ion-label>
+        <p>{{ product?.description }}</p>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha de Nacimiento:</ion-label>
+        <p>{{ product?.birthdate | date:'mediumDate' }}</p>
+      </ion-item>
+
+      <ion-button type="button" shape="round" color="primary" expand="block" [routerLink]="['/product-edit', product?.id]">Editar</ion-button>
+      <ion-button type="button" shape="round" color="danger" expand="block" (click)="delete(producto.id)">Eliminar</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

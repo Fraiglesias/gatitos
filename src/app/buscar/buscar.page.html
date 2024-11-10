@@ -1,0 +1,47 @@
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      
+      <ion-buttons slot="start">
+        <ion-button (click)="volver('/home')" ><ion-icon slot="start" name="chevron-back-outline"></ion-icon></ion-button>
+      </ion-buttons>      
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>                        
+            <ion-searchbar [debounce]="1000" (ionInput)="buscarProducto($event)" placeholder=""></ion-searchbar>        
+          </ion-col>         
+          <ion-icon name="cart" size="large" class="ion-padding" (click)="redirectTo('/cart')"></ion-icon>
+        </ion-row>
+      </ion-grid>
+
+    </ion-toolbar>     
+  </ion-header>  
+
+
+  <ng-template #noResults>
+    <ion-item>
+      <ion-label>No hay resultados para mostrar</ion-label>
+    </ion-item>
+  </ng-template> 
+
+    <ion-content *ngIf="busqueda.length > 0; else noResults">    
+      <ion-col *ngFor="let pp of busqueda" size="3">
+        <ion-card >
+        
+          <ion-card-header>
+            <ion-card-title>{{pp.name}}</ion-card-title>
+            <ion-card-subtitle>{{ pp.breed }}</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <p>Categoría: {{ pp.description }}</p>            
+            <p>Fecha: {{ pp.birthdate }}</p>
+              </ion-card-content>
+          <ion-button expand="block" (click)="addToCart(pp)">Agregar al carrito</ion-button>
+        </ion-card>        
+      </ion-col>
+     
+    </ion-content>
+    

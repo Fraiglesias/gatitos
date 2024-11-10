@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="volver('/home')" ><ion-icon slot="start" name="chevron-back-outline"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Gatitos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/cart">
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar [debounce]="1000" (ionInput)="buscarProducto($event)" placeholder=""></ion-searchbar>     
+
+  
+
+    <ion-content *ngIf="busqueda.length > 0">    
+      <ion-col *ngFor="let pp of busqueda" size="3" >
+        <ion-card  (click)="redirectTo(pp.id)">
+         
+
+          <ion-card-header>
+            <ion-card-title>{{pp.name}}</ion-card-title>
+            <ion-card-subtitle>{{ pp.breed }}</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <p>Categoría: {{ pp.description }}</p>            
+           </ion-card-content>
+          <ion-button expand="block" (click)="addToCart(pp)">Adoptar</ion-button>
+        </ion-card>        
+      </ion-col>
+    </ion-content><br><br>
+
+    <ion-col *ngFor="let pp of productos" size="3">
+      <ion-card >
+       
+        <ion-card-header>
+          <ion-card-title>{{pp.name}}</ion-card-title>
+          <ion-card-subtitle>{{ pp.breed }}</ion-card-subtitle>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <p>Categoría: {{ pp.description }}</p>            
+          </ion-card-content>
+        <ion-button expand="block" (click)="addToCart(pp)">Adoptar</ion-button>
+      </ion-card>        
+    </ion-col>
+    
+ 
+</ion-content>

@@ -1,20 +1,119 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-menu contentId="main-content">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title>
+        <ion-icon name="paw"></ion-icon>
+        GatitoMax
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+  <ion-content>
+    
+    <ion-grid>
+
+      <ion-row  class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="paw" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text (click)="redirectTo('/product-add')">Agregar Gatito</ion-text></ion-col>
+      </ion-row>
+
+      <ion-row (click)="redirectTo('/kitten-list')" class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="paw" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text (click)="redirectTo('/product-list')">Gatitos</ion-text></ion-col>
+      </ion-row>
+
+      <ion-row (click)="redirectTo('/search')" class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="search" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text (click)="redirectTo('/buscar')">Buscar Gatito</ion-text></ion-col>
+      </ion-row>
+
+      <ion-row (click)="redirectTo('/favorites')" class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="heart" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text>Favoritos</ion-text></ion-col>
+      </ion-row>
+
+      <ion-row (click)="redirectTo('/adoption-history')" class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="time" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text>Historial de Adopción</ion-text></ion-col>
+      </ion-row>
+
+      <ion-row (click)="redirectTo('/account')" class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="contact" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text (click)="redirectTo('')">Mi Cuenta</ion-text></ion-col>
+      </ion-row>
+
+      <ion-row (click)="redirectTo('/help')" class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="help-circle" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text>Ayuda</ion-text></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>             
+            <ion-searchbar [debounce]="1000" (ionInput)="buscarGatito($event)" placeholder="Buscar Gatito" (click)="redirectTo('/buscar')"></ion-searchbar>        
+          </ion-col>         
+          <ion-icon name="heart" size="large" class="ion-padding" (click)="redirectTo('/cart')" ></ion-icon>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-title>Gatitos en Adopción</ion-title>
+    <ion-col *ngFor="let pp of productos" size="3">
+      <ion-card (click)="redirectTo2(pp.id)">
+       
+        <ion-card-header>
+          <ion-card-title>{{pp.name}}</ion-card-title>
+          <ion-card-subtitle>{{ pp.breed }}</ion-card-subtitle>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <p>Categoría: {{ pp.description }}</p>            
+          </ion-card-content>       
+      </ion-card>    
+      <ion-button expand="block" (click)="addToCart(pp)">Adoptar</ion-button>    
+    </ion-col>
+   
+
+  
+
+    <ion-content>
+      <ion-title>
+        <ion-grid>
+          <ion-row class="ion-text-center">
+            <ion-col>
+              <ion-icon name="paw" size="large"></ion-icon>
+              <p>Entrega en 24 a 48 hrs</p>
+              <br>
+              <ion-icon name="home"></ion-icon>
+              <p>Visitas en el refugio</p>
+              <p>09:00 a 17:30 hrs</p>
+              <br>
+              <ion-icon name="chatbubbles"></ion-icon>
+              <p>Opiniones</p>
+              <ion-icon name="logo-facebook" class="ion-padding"></ion-icon>
+              <ion-icon name="logo-instagram" class="ion-padding"></ion-icon>
+              <ion-icon name="logo-whatsapp" class="ion-padding"></ion-icon>
+              <p>Redes Sociales</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-title>
+    </ion-content>
+  </ion-content>
+</div>

@@ -1,48 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
-
-import { ClProducto } from '../producto/model/Clproducto';
-import { ProductServiceService } from '../producto/product-service.service';
+import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { CartService } from '../producto/cart.service';
+import { ClProducto } from '../model/Clproducto';
+import { ProductServiceService } from '../product-service.service';
+import { CartService } from '../cart.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-product-list',
+  templateUrl: './product-list.page.html',
+  styleUrls: ['./product-list.page.scss'],
 })
-export class HomePage implements OnInit {
-  @Input() producto!: ClProducto;
+export class ProductListPage implements OnInit {
   productos: ClProducto[] = [];
-  ofertas: ClProducto[] = [];
-  novedad: ClProducto[] = [];
   searchTerm: string = ''; // Añadido para la búsqueda
   busqueda: ClProducto[] = [];
-  carrito: { producto: ClProducto, cantidad: number, precioFinal: number }[] = [];
-
- 
-
-
- 
 
   constructor(
     private restApi: ProductServiceService,
-    private loadingController: LoadingController,   
+    private loadingController: LoadingController,
     private router: Router,
-    private cartService: CartService) {}
+    private cartService: CartService
+  ) {}
 
-  // Función para redirigir a otra página
-  redirectTo(path: string) {
-    this.router.navigate([path]);
-  }
-  
-  redirectTo2(id: number) {
-    this.router.navigate([`/product-detail/${id}`]); // Redirige a la página de detalles con el ID del gatito
-  }
   ngOnInit() {
     this.getProducts();
   }
-  
 
   async getProducts() {
     const loading = await this.loadingController.create({
@@ -54,10 +36,8 @@ export class HomePage implements OnInit {
       next: (res: ClProducto[]) => {
         console.log('Productos recibidos:', res);
         this.productos = res.map(producto => new ClProducto(producto));
-        
-        
-        loading.dismiss();
         this.busqueda = this.productos;
+        loading.dismiss();
       },
       error: (err) => {
         console.log("Error:", err);
@@ -66,8 +46,9 @@ export class HomePage implements OnInit {
     });
   }
 
- 
-
+  redirectTo(id: number) {
+    this.router.navigate([`/product-detail/${id}`]); // Redirige a la página de detalles con el ID del gatito
+  }
   handleRefresh(event: { target: { complete: () => void } }) {
     setTimeout(() => {
       event.target.complete();
@@ -79,13 +60,17 @@ export class HomePage implements OnInit {
     this.cartService.addToCart(producto);
     console.log('Producto agregado al carrito:', producto);
   }
+  volver(path: string) {
+    this.router.navigate([path]);
+  }
   formatPrice(price: number): string {
     return price.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' });
   }
   getDiscountedPrice(price: number): number {
     return price * 0.8; // Aplica un descuento del 20%
   }
-  buscarGatito(event: any) {
+
+  buscarProducto(event: any) {
     const term = event.target.value.toLowerCase().trim();
     if (!term) {
       this.busqueda = []; // Si no hay término de búsqueda, muestra la lista vacía
@@ -98,12 +83,4 @@ export class HomePage implements OnInit {
     }
     console.log('Productos encontrados:', this.busqueda);
   }
-
-  
-
-
-  
-  
-
-
 }

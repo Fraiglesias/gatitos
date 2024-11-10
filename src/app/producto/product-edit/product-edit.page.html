@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Editar Gatito</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/product-list"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="productForm" (ngSubmit)="onFormSubmit()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Detalles del Gatito</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Nombre: </ion-label>
+          <ion-input formControlName="prod_name"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Raza: </ion-label>
+          <ion-input formControlName="prod_breed"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Edad: </ion-label>
+          <ion-input type="number" formControlName="prod_age"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Fecha de Nacimiento: </ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" formControlName="prod_birthdate"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Descripción: </ion-label>
+          <ion-textarea formControlName="prod_description"></ion-textarea>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Botones de confirmación -->
+    <div class="ion-padding">
+      <ion-button expand="block" color="primary" type="submit">Guardar Cambios</ion-button>
+      <ion-button expand="block" color="medium" (click)="cancel()">Cancelar</ion-button>
+    </div>
+  </form>
+</ion-content>
