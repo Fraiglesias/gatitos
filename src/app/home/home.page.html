@@ -3,7 +3,7 @@
     <ion-toolbar>
       <ion-title>
         <ion-icon name="paw"></ion-icon>
-        GatitoMax
+        PetRescue
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -17,32 +17,42 @@
         <ion-col size="10"><ion-text (click)="redirectTo('/product-add')">Agregar Gatito</ion-text></ion-col>
       </ion-row>
 
-      <ion-row (click)="redirectTo('/kitten-list')" class="ion-padding">
+      <ion-row  class="ion-padding">
         <ion-col offset-sm="1"><ion-icon name="paw" size="default"></ion-icon></ion-col>
         <ion-col size="10"><ion-text (click)="redirectTo('/product-list')">Gatitos</ion-text></ion-col>
       </ion-row>
 
-      <ion-row (click)="redirectTo('/search')" class="ion-padding">
+      <ion-row  class="ion-padding">
         <ion-col offset-sm="1"><ion-icon name="search" size="default"></ion-icon></ion-col>
         <ion-col size="10"><ion-text (click)="redirectTo('/buscar')">Buscar Gatito</ion-text></ion-col>
       </ion-row>
 
-      <ion-row (click)="redirectTo('/favorites')" class="ion-padding">
+      <ion-row  class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="search" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text (click)="redirectTo('/camara')">Camara</ion-text></ion-col>
+      </ion-row>
+
+      <ion-row  class="ion-padding">
+        <ion-col offset-sm="1"><ion-icon name="search" size="default"></ion-icon></ion-col>
+        <ion-col size="10"><ion-text (click)="redirectTo('/maps')">Encuentranos</ion-text></ion-col>
+      </ion-row>
+
+      <ion-row  class="ion-padding">
         <ion-col offset-sm="1"><ion-icon name="heart" size="default"></ion-icon></ion-col>
         <ion-col size="10"><ion-text>Favoritos</ion-text></ion-col>
       </ion-row>
 
-      <ion-row (click)="redirectTo('/adoption-history')" class="ion-padding">
+      <ion-row  class="ion-padding">
         <ion-col offset-sm="1"><ion-icon name="time" size="default"></ion-icon></ion-col>
         <ion-col size="10"><ion-text>Historial de Adopción</ion-text></ion-col>
       </ion-row>
 
-      <ion-row (click)="redirectTo('/account')" class="ion-padding">
+      <ion-row class="ion-padding">
         <ion-col offset-sm="1"><ion-icon name="contact" size="default"></ion-icon></ion-col>
         <ion-col size="10"><ion-text (click)="redirectTo('')">Mi Cuenta</ion-text></ion-col>
       </ion-row>
 
-      <ion-row (click)="redirectTo('/help')" class="ion-padding">
+      <ion-row  class="ion-padding">
         <ion-col offset-sm="1"><ion-icon name="help-circle" size="default"></ion-icon></ion-col>
         <ion-col size="10"><ion-text>Ayuda</ion-text></ion-col>
       </ion-row>

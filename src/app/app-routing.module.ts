@@ -50,7 +50,16 @@ const routes: Routes = [
   {
     path: 'recuperar',
     loadChildren: () => import('./cuenta/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
+  },
+  {
+    path: 'camara',
+    loadChildren: () => import('./capacitor/camara/camara.module').then( m => m.CamaraPageModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'maps',
+    loadChildren: () => import('./capacitor/maps/maps.module').then( m => m.MapsPageModule), canActivate: [AuthGuard]
   }
+
 ];
 
 @NgModule({

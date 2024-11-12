@@ -14,7 +14,7 @@
       <ion-label position="floating">Contraseña</ion-label>
       <ion-input formControlName="contrasena" type="password"></ion-input>
     </ion-item>
-    <ion-button expand="block" type="submit">Iniciar Sesión</ion-button>
+    <ion-button expand="block" type="submit" (click)="redirectTo('/home')">Iniciar Sesión</ion-button>
     <ion-text color="danger" *ngIf="errorMessage">{{ errorMessage }}</ion-text>
   </form>
 </ion-content>

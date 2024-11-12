@@ -1,0 +1,13 @@
+.page-content {
+    height: 100vh;  // Full viewport height
+    width: 100vw;   // Full viewport width
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #mapContainer {
+    height: 100%;
+    width: 100%;
+  }
+  
