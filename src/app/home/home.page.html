@@ -3,7 +3,7 @@
     <ion-toolbar>
       <ion-title>
         <ion-icon name="paw"></ion-icon>
-        PetRescue
+        PetRescue <p>Bienvenido, {{ userName }}!</p>
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -92,7 +92,7 @@
 
     <ion-title>Gatitos en Adopción</ion-title>
     <ion-col *ngFor="let pp of productos" size="3">
-      <ion-card (click)="redirectTo2(pp.id)">
+      <ion-card (click)="redirectTo2(pp.id!)">
        
         <ion-card-header>
           <ion-card-title>{{pp.name}}</ion-card-title>

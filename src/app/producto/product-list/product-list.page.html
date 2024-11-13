@@ -22,7 +22,7 @@
 
     <ion-content *ngIf="busqueda.length > 0">    
       <ion-col *ngFor="let pp of busqueda" size="3" >
-        <ion-card  (click)="redirectTo(pp.id)">
+        <ion-card  (click)="redirectTo(pp.id!)">
          
 
           <ion-card-header>

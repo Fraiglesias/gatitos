@@ -11,16 +11,7 @@ import { ProductServiceService } from '../product-service.service';
 })
 export class ProductDetailPage implements OnInit {
   // Objeto del gatito con las propiedades adecuadas
-  producto: ClProducto = {
-    id: 0,            // ID del gatito
-    name: '',         // Nombre del gatito
-    breed: '',        // Raza del gatito
-    age: 0,           // Edad en años
-    birthdate: '',    // Fecha de nacimiento
-    description: '',  // Descripción
-  };
-  product: ClProducto | undefined;
-
+  producto: ClProducto | null = null;
 
   constructor(
     private productService: ProductServiceService,
@@ -36,15 +27,20 @@ export class ProductDetailPage implements OnInit {
 
   // Función para cargar los detalles del gatito
   async loadKittenDetails() {
-    const idString = this.route.snapshot.paramMap.get('id')!;
-    const id = parseInt(idString, 10);
+    const idString = this.route.snapshot.paramMap.get('id');
+    const id = idString ? parseInt(idString, 10) : null;
+
+    if (!id) {
+      console.error("ID no válido");
+      return;
+    }
 
     const loading = await this.loadingController.create({ message: 'Cargando...' });
     await loading.present();
 
     this.productService.getProduct(id).subscribe({
       next: (res) => {
-        this.product = res;
+        this.producto = res || null;
         loading.dismiss();
       },
       error: (err) => {
@@ -55,7 +51,8 @@ export class ProductDetailPage implements OnInit {
   }
 
   // Método para confirmar la eliminación del gatito
-  async delete(id: number) {
+  async delete(id: number | undefined) {
+    if (!id) return;
     const alert = await this.alertController.create({
       header: '¡Advertencia!',
       message: '¿Está seguro de que desea eliminar este gatito?',
@@ -66,22 +63,26 @@ export class ProductDetailPage implements OnInit {
         },
         {
           text: 'Eliminar',
-          handler: () => this.confirmDelete(id)
+          handler: () => this.Delete(id)
         }
       ]
     });
     await alert.present();
   }
 
-  // Función para eliminar el gatito confirmado
-  async confirmDelete(id: number) {
+  async Delete(id: number | undefined) {
+    if (id == null) {  // Verifica si el id es undefined o null
+      console.error("ID no válido para eliminar.");
+      return;
+    }
+  
     const loading = await this.loadingController.create({ message: 'Eliminando...' });
     await loading.present();
-
+  
     this.productService.deleteProduct(id).subscribe({
       next: () => {
         loading.dismiss();
-        this.router.navigate(['/product-list']); // Redirige a la lista después de eliminar
+        this.router.navigate(['/home']); // Redirige a la lista después de eliminar
       },
       error: (err) => {
         console.error("Error al eliminar el gatito:", err);
@@ -89,4 +90,5 @@ export class ProductDetailPage implements OnInit {
       }
     });
   }
+  
 }

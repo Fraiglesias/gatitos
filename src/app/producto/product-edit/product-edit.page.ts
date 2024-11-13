@@ -17,7 +17,7 @@ export class ProductEditPage implements OnInit {
     id: 0,
     name: '',
     breed: '',
-    age: 0,
+    age:0,
     birthdate: '',
     description: ''
   };
@@ -58,7 +58,7 @@ export class ProductEditPage implements OnInit {
         if (product) { // Verificación de que `product` no es undefined
           console.log("Datos del gatito obtenidos:", product);
           this.producto = product; // Asigna el objeto completo `product` a `this.producto`
-          this.id = product.id;
+          this.id = product.id ?? undefined;
   
           // Usar `setTimeout` para aplicar los valores después de un breve retraso
           setTimeout(() => {

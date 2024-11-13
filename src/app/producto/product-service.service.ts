@@ -62,10 +62,11 @@ export class ProductServiceService {
   updateProduct(id: number, producto: ClProducto): Observable<ClProducto> {
     const url = `${apiUrl}/${id}`;
     return this.http.put<ClProducto>(url, producto, {
-      headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' }
     }).pipe(
-      tap((updatedProduct) => console.log(`Producto actualizado: ${updatedProduct}`)),
-      catchError(this.handleError<ClProducto>('updateProduct'))
+        tap((updatedProduct) => console.log(`Producto actualizado: ${updatedProduct}`)),
+        catchError(this.handleError<ClProducto>('updateProduct'))
     );
-  }
+}
+  
 }

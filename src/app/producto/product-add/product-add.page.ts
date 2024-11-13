@@ -18,7 +18,7 @@ export class ProductAddPage implements OnInit {
   productForm!: FormGroup;
   
   producto: ClProducto = {
-    id: 0,            // ID del gatito
+    id: null,           // ID del gatito
     name: '',         // Nombre del gatito
     breed: '',        // Raza del gatito
     age: 0,           // Edad en años
@@ -46,7 +46,7 @@ export class ProductAddPage implements OnInit {
 
   // Método que se ejecuta cuando se envía el formulario
   async onFormSubmit(form: NgForm) {
-    console.log("onFormSubmit del Product ADD");
+    console.log("onFormSubmit del Gatito ADD");
 
     const loading = await this.loadingController.create({
       message: 'Loading...'
@@ -56,7 +56,7 @@ export class ProductAddPage implements OnInit {
     // Ejecuta el método del servicio y los suscribe
     this.restApi.addProduct(this.producto).subscribe({
       next: (res) => {
-        console.log("Next AddProduct Page", res);
+        console.log("Next AddGatito Page", res);
         loading.dismiss();
         if (res == null) {
           console.log("Next No Agrego, Ress Null ");
@@ -66,10 +66,10 @@ export class ProductAddPage implements OnInit {
         this.router.navigate(['/home']);
       },
       error: (err) => {
-        console.log("Error AddProduct Página", err);
+        console.log("Error AddGatito Página", err);
         loading.dismiss();
       }
     });
     console.log("Observe que todo lo del suscribe sale después de este mensaje");
-  }
+}
 }

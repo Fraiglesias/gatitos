@@ -28,29 +28,43 @@ export class RegistroPage implements OnInit {
     });
   }
   ngOnInit(): void {
- ;
+    ;
   }
 
-  onSubmit() {
-    const profileData = {
+
+
+  register() {
+    if (this.registroForm.invalid) {
+      this.errorMessage = 'Por favor, completa todos los campos obligatorios correctamente.';
+      return;
+    }
+  
+    const userData = {
       NOMBRE: this.registroForm.get('nombre')?.value,
       RUT: this.registroForm.get('rut')?.value,
       CORREO: this.registroForm.get('correo')?.value,
-      CONTRASENA: this.registroForm.get('contrasena')?.value,
-      DIRECCIÓN: this.registroForm.get('direccion')?.value,
-      REGIÓN: this.registroForm.get('region')?.value,
-      COMUNA: this.registroForm.get('comuna')?.value,
-      TIPO_PERFIL: 1 // Por ejemplo, se puede ajustar según el tipo de perfil
+      CONTRASENA: this.registroForm.get('contrasena')?.value, // Verifica que sea 'contrasena'
+      TIPO_PERFIL: 1,  // Ajusta este valor según tu lógica
+      DIRECCION: this.registroForm.get('direccion')?.value,
+      REGION: this.registroForm.get('region')?.value,
+      COMUNA: this.registroForm.get('comuna')?.value
     };
-
-    this.authService.createProfile(profileData).subscribe({
-      next: (response) => {
-        console.log('Perfil creado:', response);
-        this.router.navigate(['/login']);  // Redirige al inicio de sesión después de crear la cuenta
+  
+    console.log("Datos del usuario a registrar:", userData); // Mensaje de depuración para verificar valores
+  
+    this.authService.registerUser(userData).subscribe({
+      next: response => {
+        console.log('Usuario registrado:', response);
+        alert('Usuario registrado con éxito.');
+        this.router.navigate(['/login']);  // Redirige al inicio de sesión u otra página después del registro
       },
-      error: (error) => {
+      error: error => {
         console.error('Error al crear el perfil:', error);
-        this.errorMessage = 'No se pudo crear el perfil. Inténtalo de nuevo.';
+        if (error.status === 409) {
+          this.errorMessage = 'El correo ya está registrado. Por favor, utiliza otro correo.';
+        } else {
+          this.errorMessage = 'Error al crear el perfil. Por favor, intenta de nuevo más tarde.';
+        }
       }
     });
   }

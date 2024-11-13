@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../producto/cart.service';
 import { AuthService } from '../auth.service';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -20,7 +21,7 @@ export class HomePage implements OnInit {
   searchTerm: string = ''; // Añadido para la búsqueda
   busqueda: ClProducto[] = [];
   carrito: { producto: ClProducto, cantidad: number, precioFinal: number }[] = [];
-
+  userName: string | null = null;
  
 
 
@@ -42,6 +43,7 @@ export class HomePage implements OnInit {
     this.router.navigate([`/product-detail/${id}`]); // Redirige a la página de detalles con el ID del gatito
   }
   ngOnInit() {
+    this.userName = this.authService.getUserName();
     this.getProducts();
   }
   onLogout() {

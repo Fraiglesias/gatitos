@@ -1,6 +1,6 @@
 export class ClProducto {
 
-    id: number;             // ID del gatito
+    id?: number | null;            // ID del gatito
     name: string;           // Nombre del gatito
     breed: string;          // Raza del gatito
     age: number;            // Edad en años

@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/auth.service';
 export class RecuperarPage implements OnInit {
 
   correo: string = '';
+  newPassword: string = ''; // Agregar esta propiedad
   message: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -18,12 +19,16 @@ export class RecuperarPage implements OnInit {
   }
 
   recoverPassword() {
-    this.authService.recoverPassword(this.correo).subscribe({
+    this.authService.recoverPassword(this.correo, this.newPassword).subscribe({
       next: (response) => {
         if (response.success) {
-          this.message = 'Se ha enviado un correo para restablecer la contraseña.';
+          this.message = 'Contraseña actualizada correctamente.';
+          // Redirigir al login después de 2 segundos
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
         } else {
-          this.message = 'No se pudo enviar el correo. Inténtalo de nuevo.';
+          this.message = 'No se pudo actualizar la contraseña. Inténtalo de nuevo.';
         }
       },
       error: (err) => {
@@ -32,6 +37,7 @@ export class RecuperarPage implements OnInit {
       }
     });
   }
+  
   redirectTo(path: string) {
     this.router.navigate([path]);
   }
