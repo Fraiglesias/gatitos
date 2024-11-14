@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 @Component({
   selector: 'app-camara',
   templateUrl: './camara.page.html',
@@ -15,6 +15,7 @@ export class CamaraPage implements OnInit {
   }
  
 
+  
 
 
   // Cambiamos la declaración a una función async con flecha

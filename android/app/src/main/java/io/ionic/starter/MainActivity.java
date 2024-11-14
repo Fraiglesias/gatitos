@@ -1,4 +1,4 @@
-package com.petrescue;
+package io.ionic.starter;
 
 import com.getcapacitor.BridgeActivity;
 
